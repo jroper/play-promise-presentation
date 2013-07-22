@@ -1,4 +1,4 @@
-package async;
+package promise;
 
 import model.Bread;
 import model.Dough;

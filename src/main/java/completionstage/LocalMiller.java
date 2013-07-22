@@ -1,18 +1,20 @@
-package async;
+package completionstage;
 
 import model.Flour;
-import play.libs.F.*;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 public class LocalMiller implements Miller {
 
-    public Promise<Flour> orderFlour() {
-        Promise<Flour> flourOrder;
+    public CompletionStage<Flour> orderFlour() {
+        CompletionStage<Flour> flourOrder;
 
         // Check if flour is in stock
         if (hasFlourInStock()) {
 
             // Create a pure (immediate) promise for stocked flour
-            flourOrder = Promise.pure(getStockedFlour());
+            flourOrder = CompletableFuture.completedFuture(getStockedFlour());
 
         } else {
 
@@ -66,7 +68,7 @@ public class LocalMiller implements Miller {
         return true;
     }
 
-    private Promise<Flour> orderFlourToBeMilled() {
+    private CompletionStage<Flour> orderFlourToBeMilled() {
         return null;
     }
 }

@@ -1,4 +1,4 @@
-package async;
+package promise;
 
 import model.Yeast;
 import play.libs.F.*;

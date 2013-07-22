@@ -1,7 +1,7 @@
-package async;
+package completionstage;
 
 import model.Flour;
-import play.libs.F.*;
+import java.util.concurrent.CompletionStage;
 
 public interface Miller {
     /**
@@ -9,5 +9,5 @@ public interface Miller {
      *
      * @return A promise to deliver some flour
      */
-    public Promise<Flour> orderFlour();
+    public CompletionStage<Flour> orderFlour();
 }
