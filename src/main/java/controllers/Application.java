@@ -1,5 +1,6 @@
 package controllers;
 
+import akka.dispatch.ExecutionContexts;
 import model.SlicedBread;
 import play.libs.F.*;
 import play.libs.Json;
@@ -7,6 +8,9 @@ import play.libs.WS;
 import play.mvc.Controller;
 import play.mvc.Result;
 import promise.Baker;
+import scala.concurrent.ExecutionContext;
+
+import java.util.concurrent.Executors;
 
 public class Application extends Controller {
     private static Baker baker;
@@ -49,6 +53,8 @@ public class Application extends Controller {
 
     public static Promise<Result> backgroundAction() {
 
+        ExecutionContext ec = ExecutionContexts.fromExecutor(Executors.newSingleThreadExecutor());
+
         // Schedule something that will take a while
         Promise<Long> sum = Promise.promise(() -> {
             long total = 0;
@@ -56,7 +62,7 @@ public class Application extends Controller {
                 total = total + i;
             }
             return total;
-        });
+        }, ec);
 
         // Map it to JSON
         return sum.map(total -> (Result) ok(Json.toJson(total)));
